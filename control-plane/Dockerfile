@@ -1,4 +1,4 @@
-FROM golang:1.22-alpine AS build
+FROM golang:1.26-alpine AS build
 WORKDIR /src
 COPY control-plane/go.mod control-plane/go.sum* ./
 RUN go mod download 2>/dev/null || true
