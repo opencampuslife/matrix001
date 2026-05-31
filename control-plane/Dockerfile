@@ -5,7 +5,7 @@ RUN go mod download 2>/dev/null || true
 COPY control-plane/ ./
 RUN CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w" -o /gaokao-gateway ./cmd/gaokao-gateway
 
-FROM alpine:3.20
+FROM alpine:3.23
 RUN addgroup -S gaokao && adduser -S gaokao -G gaokao
 COPY --from=build /gaokao-gateway /usr/local/bin/gaokao-gateway
 COPY contracts/routes.yaml /app/contracts/routes.yaml
