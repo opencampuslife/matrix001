@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://open-campus-matrix/schemas/knowledge-manifest.json",
+  "title": "Knowledge Manifest",
+  "description": "Signed manifest describing a knowledge pack release",
+  "type": "object",
+  "required": ["knowledge_version", "manifest_hash", "merkle_root", "packages", "issuer", "signature"],
+  "properties": {
+    "knowledge_version": {
+      "type": "string",
+      "pattern": "^matrix-kb-\\d{4}\\.\\d{2}\\.\\d{2}\\.\\d{3}$",
+      "description": "Version identifier: matrix-kb-YYYY.MM.DD.NNN"
+    },
+    "previous_version": {
+      "type": "string",
+      "description": "Previous knowledge version for delta tracking"
+    },
+    "manifest_hash": {
+      "type": "string",
+      "pattern": "^0x[a-fA-F0-9]+$",
+      "description": "SHA-384 hash of the manifest content"
+    },
+    "merkle_root": {
+      "type": "string",
+      "pattern": "^0x[a-fA-F0-9]+$",
+      "description": "Merkle root of all knowledge packages in this release"
+    },
+    "policy_hash": {
+      "type": "string",
+      "pattern": "^0x[a-fA-F0-9]+$",
+      "description": "Hash of the policy under which this manifest is valid"
+    },
+    "packages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["package_id", "cid", "hash", "encrypted_dek"],
+        "properties": {
+          "package_id": {
+            "type": "string",
+            "description": "Knowledge package identifier"
+          },
+          "cid": {
+            "type": "string",
+            "description": "Content-addressed identifier (IPFS-compatible)"
+          },
+          "hash": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]+$",
+            "description": "SHA-384 hash of the encrypted package"
+          },
+          "role_tags": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Roles that may decrypt this package"
+          },
+          "encrypted_dek": {
+            "type": "string",
+            "description": "ML-KEM-768 encapsulated DEK (base64)"
+          }
+        }
+      }
+    },
+    "issuer": {
+      "type": "string",
+      "description": "DID of the Mother Agent that issued this manifest"
+    },
+    "signature": {
+      "type": "string",
+      "description": "ML-DSA-65 signature over the manifest"
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

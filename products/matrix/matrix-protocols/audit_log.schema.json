@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://open-campus-matrix/schemas/audit-log.json",
+  "title": "Audit Log Entry",
+  "description": "Signed audit log entry for offline agent actions",
+  "type": "object",
+  "required": ["event_id", "agent_id", "action", "timestamp", "signature"],
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "description": "Unique audit event identifier"
+    },
+    "agent_id": {
+      "type": "string",
+      "description": "Agent that performed the action"
+    },
+    "capability_id": {
+      "type": "string",
+      "description": "Capability token used for this action"
+    },
+    "action": {
+      "type": "string",
+      "enum": [
+        "knowledge.search",
+        "knowledge.decrypt",
+        "rag.query",
+        "summary.generate",
+        "tool.invoke",
+        "sync.upload",
+        "sync.download",
+        "identity.register",
+        "identity.revoke",
+        "audit.upload"
+      ],
+      "description": "Action performed by the agent"
+    },
+    "action_detail": {
+      "type": "object",
+      "description": "Action-specific metadata (e.g., query hash, tool name)"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the action occurred"
+    },
+    "offline": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this action was performed offline"
+    },
+    "knowledge_version": {
+      "type": "string",
+      "description": "Knowledge version used (for search/generate actions)"
+    },
+    "policy_hash": {
+      "type": "string",
+      "description": "Policy hash active at time of action"
+    },
+    "result": {
+      "type": "string",
+      "enum": ["allowed", "denied", "error"],
+      "description": "Outcome of the action"
+    },
+    "signature": {
+      "type": "string",
+      "description": "ML-DSA-65 signature over the audit entry"
+    }
+  }
+}
