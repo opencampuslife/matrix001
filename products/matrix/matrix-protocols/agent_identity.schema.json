@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://open-campus-matrix/schemas/agent-identity.json",
+  "title": "Agent Identity",
+  "description": "Agent registration identity schema for Open Campus Matrix",
+  "type": "object",
+  "required": ["agent_id", "agent_type", "parent_id", "public_keys", "requested_roles"],
+  "properties": {
+    "agent_id": {
+      "type": "string",
+      "pattern": "^did:matrix:(mother|child):[a-zA-Z0-9_-]+$",
+      "description": "Decentralized identifier for the agent"
+    },
+    "agent_type": {
+      "type": "string",
+      "enum": ["mother", "child"],
+      "description": "Agent type: mother (control plane) or child (edge runtime)"
+    },
+    "parent_id": {
+      "type": "string",
+      "description": "Parent mother agent ID for child agents"
+    },
+    "public_keys": {
+      "type": "object",
+      "required": ["kem", "signing"],
+      "properties": {
+        "kem": {
+          "type": "string",
+          "description": "ML-KEM-768 public key (base64-encoded)"
+        },
+        "signing": {
+          "type": "string",
+          "description": "ML-DSA-65 public key (base64-encoded)"
+        }
+      }
+    },
+    "device_attestation": {
+      "type": "string",
+      "description": "Optional device attestation evidence"
+    },
+    "requested_roles": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1,
+      "description": "Requested role assignments for this agent"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of registration"
+    }
+  }
+}

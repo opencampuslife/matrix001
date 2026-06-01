@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://open-campus-matrix/schemas/revocation-manifest.json",
+  "title": "Revocation Manifest",
+  "description": "Signed revocation manifest for revoking agent capabilities or knowledge versions",
+  "type": "object",
+  "required": ["revocation_id", "revocation_type", "target_id", "issuer", "signature"],
+  "properties": {
+    "revocation_id": {
+      "type": "string",
+      "description": "Unique revocation event identifier"
+    },
+    "revocation_type": {
+      "type": "string",
+      "enum": ["agent", "capability", "knowledge_version", "policy"],
+      "description": "Type of entity being revoked"
+    },
+    "target_id": {
+      "type": "string",
+      "description": "ID of the entity being revoked (agent_id, capability_id, knowledge_version, policy_hash)"
+    },
+    "reason": {
+      "type": "string",
+      "description": "Human-readable reason for revocation"
+    },
+    "effective_from": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When revocation takes effect"
+    },
+    "previous_revocation_root": {
+      "type": "string",
+      "description": "Previous Merkle root of revocation list"
+    },
+    "new_revocation_root": {
+      "type": "string",
+      "description": "New Merkle root of revocation list after this entry"
+    },
+    "issuer": {
+      "type": "string",
+      "description": "DID of the issuer"
+    },
+    "signature": {
+      "type": "string",
+      "description": "ML-DSA-65 signature over the revocation entry"
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://open-campus-matrix/schemas/capability-token.json",
+  "title": "Capability Token",
+  "description": "Offline capability token that authorizes child agent actions",
+  "type": "object",
+  "required": ["capability_id", "agent_id", "roles", "offline_allowed", "policy_hash", "issuer_signature"],
+  "properties": {
+    "capability_id": {
+      "type": "string",
+      "description": "Unique capability token identifier"
+    },
+    "agent_id": {
+      "type": "string",
+      "description": "Agent that holds this capability"
+    },
+    "roles": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Assigned roles for the agent"
+    },
+    "allowed_knowledge": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Knowledge base IDs the agent may access"
+    },
+    "allowed_tools": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Tool IDs the agent may invoke"
+    },
+    "denied_tools": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Tool IDs explicitly denied (deny takes precedence)"
+    },
+    "offline_allowed": {
+      "type": "boolean",
+      "description": "Whether offline execution is permitted"
+    },
+    "offline_expiry": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When offline capability expires (must re-sync before)"
+    },
+    "max_offline_actions": {
+      "type": "integer",
+      "minimum": 0,
+      "default": 500,
+      "description": "Maximum number of actions allowed offline"
+    },
+    "policy_hash": {
+      "type": "string",
+      "pattern": "^0x[a-fA-F0-9]+$",
+      "description": "Hash of the policy version this capability is bound to"
+    },
+    "issuer_signature": {
+      "type": "string",
+      "description": "ML-DSA-65 signature from the Mother Agent over the capability payload"
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

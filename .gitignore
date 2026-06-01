@@ -6,6 +6,7 @@ data/audit_logs/*.jsonl
 data/llm_logs/*.jsonl
 __pycache__/
 *.pyc
+*.tsbuildinfo
 reports/shadow/*.json
 reports/shadow/*.jsonl
 reports/shadow/*.md
