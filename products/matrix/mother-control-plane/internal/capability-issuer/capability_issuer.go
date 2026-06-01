@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/gaokao-agent/matrix-mother/internal/agentregistry"
+	"github.com/gaokao-agent/matrix-mother/internal/agent-registry"
 	"github.com/gaokao-agent/matrix-mother/internal/types"
 )
 
@@ -18,15 +18,15 @@ func NewService(store agentregistry.Store) *Service {
 }
 
 type IssueRequest struct {
-	AgentID          string   `json:"agent_id"`
-	Roles            []string `json:"roles"`
-	AllowedKnowledge []string `json:"allowed_knowledge"`
-	AllowedTools     []string `json:"allowed_tools"`
-	DeniedTools      []string `json:"denied_tools"`
-	OfflineAllowed   bool     `json:"offline_allowed"`
-	OfflineTTLHours  int      `json:"offline_ttl_hours"`
-	MaxOfflineActions int    `json:"max_offline_actions"`
-	PolicyHash       string   `json:"policy_hash"`
+	AgentID           string   `json:"agent_id"`
+	Roles             []string `json:"roles"`
+	AllowedKnowledge  []string `json:"allowed_knowledge"`
+	AllowedTools      []string `json:"allowed_tools"`
+	DeniedTools       []string `json:"denied_tools"`
+	OfflineAllowed    bool     `json:"offline_allowed"`
+	OfflineTTLHours   int      `json:"offline_ttl_hours"`
+	MaxOfflineActions int      `json:"max_offline_actions"`
+	PolicyHash        string   `json:"policy_hash"`
 }
 
 func (s *Service) RegisterRoutes(mux *http.ServeMux) {
@@ -60,18 +60,18 @@ func (s *Service) handleIssue(w http.ResponseWriter, r *http.Request) {
 	}
 
 	capability := &types.CapabilityToken{
-		CapabilityID:     types.NewCapabilityTokenID(),
-		AgentID:          req.AgentID,
-		Roles:            req.Roles,
-		AllowedKnowledge: req.AllowedKnowledge,
-		AllowedTools:     req.AllowedTools,
-		DeniedTools:      req.DeniedTools,
-		OfflineAllowed:   req.OfflineAllowed,
-		OfflineExpiry:    time.Now().UTC().Add(time.Duration(req.OfflineTTLHours) * time.Hour).Format(time.RFC3339),
+		CapabilityID:      types.NewCapabilityTokenID(),
+		AgentID:           req.AgentID,
+		Roles:             req.Roles,
+		AllowedKnowledge:  req.AllowedKnowledge,
+		AllowedTools:      req.AllowedTools,
+		DeniedTools:       req.DeniedTools,
+		OfflineAllowed:    req.OfflineAllowed,
+		OfflineExpiry:     time.Now().UTC().Add(time.Duration(req.OfflineTTLHours) * time.Hour).Format(time.RFC3339),
 		MaxOfflineActions: req.MaxOfflineActions,
-		PolicyHash:       req.PolicyHash,
-		IssuedAt:         types.NowISO(),
-		Signature:        "", // TODO: sign with ML-DSA-65 signing key
+		PolicyHash:        req.PolicyHash,
+		IssuedAt:          types.NowISO(),
+		Signature:         "", // TODO: sign with ML-DSA-65 signing key
 	}
 
 	writeJSON(w, http.StatusCreated, capability)

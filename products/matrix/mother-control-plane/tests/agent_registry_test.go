@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/gaokao-agent/matrix-mother/internal/agentregistry"
+	"github.com/gaokao-agent/matrix-mother/internal/agent-registry"
 )
 
 func TestRegisterAgent(t *testing.T) {
@@ -15,11 +15,11 @@ func TestRegisterAgent(t *testing.T) {
 	svc := agentregistry.NewService(store)
 
 	body := map[string]interface{}{
-		"agent_type":      "child",
-		"parent_id":       "did:matrix:mother:root",
-		"kem_public_key":   "base64-ml-kem-pubkey",
+		"agent_type":         "child",
+		"parent_id":          "did:matrix:mother:root",
+		"kem_public_key":     "base64-ml-kem-pubkey",
 		"signing_public_key": "base64-ml-dsa-pubkey",
-		"requested_roles":  []string{"campus_edge_assistant"},
+		"requested_roles":    []string{"campus_edge_assistant"},
 	}
 	b, _ := json.Marshal(body)
 
@@ -27,10 +27,6 @@ func TestRegisterAgent(t *testing.T) {
 	req.Header.Set("Content-Type", "application/json")
 	w := httptest.NewRecorder()
 
-	svc.RegisterRoutes(http.NewServeMux())
-	svc.RegisterRoutes(nil)
-
-	// Workaround: test handler directly via a new mux
 	mux := http.NewServeMux()
 	svc.RegisterRoutes(mux)
 	mux.ServeHTTP(w, req)
@@ -86,11 +82,11 @@ func TestDeregisterAgent(t *testing.T) {
 	svc := agentregistry.NewService(store)
 
 	body := map[string]interface{}{
-		"agent_type":      "child",
-		"parent_id":       "did:matrix:mother:root",
-		"kem_public_key":   "base64-ml-kem-pubkey",
+		"agent_type":         "child",
+		"parent_id":          "did:matrix:mother:root",
+		"kem_public_key":     "base64-ml-kem-pubkey",
 		"signing_public_key": "base64-ml-dsa-pubkey",
-		"requested_roles":  []string{"campus_edge_assistant"},
+		"requested_roles":    []string{"campus_edge_assistant"},
 	}
 	b, _ := json.Marshal(body)
 
@@ -119,11 +115,11 @@ func TestRegisterInvalidAgentType(t *testing.T) {
 	svc := agentregistry.NewService(store)
 
 	body := map[string]interface{}{
-		"agent_type":      "invalid_type",
-		"parent_id":       "did:matrix:mother:root",
-		"kem_public_key":   "key",
+		"agent_type":         "invalid_type",
+		"parent_id":          "did:matrix:mother:root",
+		"kem_public_key":     "key",
 		"signing_public_key": "key",
-		"requested_roles":  []string{},
+		"requested_roles":    []string{},
 	}
 	b, _ := json.Marshal(body)
 

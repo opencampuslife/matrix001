@@ -19,7 +19,8 @@ products/matrix/
 ├── child-agent-runtime/           # Child Agent Runtime (Python)
 ├── knowledge-pack-builder/        # 加密知识包构建 (Python)
 ├── adapters/                      # 原产品 Adapter（知识导出、策略导出、审计导入）
-└── matrix-console/               # Matrix 管理控制台 (TypeScript/Svelte)
+└── matrix-console/               # Matrix 管理控制台 (React/TypeScript)
+└── usb_distribution/             # Open Campus Matrix USB Edition 打包器
 ```
 
 ## 快速开始
@@ -44,3 +45,15 @@ python -m child_agent_runtime upload-audit
 - **数据加密**: AES-256-GCM 加密知识包和本地缓存
 - **密钥派生**: HKDF-SHA384 会话密钥派生
 - **哈希**: SHA-384 / BLAKE3 用于 Merkle Root 和内容寻址
+
+## USB Edition 分发包
+
+```bash
+python -m pip install -r products/matrix/usb_distribution/requirements.txt
+python products/matrix/usb_distribution/build_usb_bundle.py --smoke --zip
+```
+
+生成目录位于 `products/matrix/dist/OPEN_CAMPUS_MATRIX_USB/`，压缩包位于
+`products/matrix/dist/open_campus_matrix_usb_edition_v0.1.zip`。该包包含本地
+runtime、离线 Mother/Child Agent 配置、ML-KEM-768 封装 DEK、AES-256-GCM 加密
+知识包、ML-DSA-65 签名 manifest、离线审计日志和模拟联网同步入口。

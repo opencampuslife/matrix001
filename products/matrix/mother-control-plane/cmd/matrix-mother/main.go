@@ -9,13 +9,13 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/gaokao-agent/matrix-mother/internal/agentregistry"
-	"github.com/gaokao-agent/matrix-mother/internal/capabilityissuer"
-	"github.com/gaokao-agent/matrix-mother/internal/revocationservice"
+	"github.com/gaokao-agent/matrix-mother/internal/agent-registry"
+	"github.com/gaokao-agent/matrix-mother/internal/capability-issuer"
+	"github.com/gaokao-agent/matrix-mother/internal/revocation-service"
 )
 
 func main() {
-	ctx, cancel := context.WithCancel(context.Background())
+	_, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
 	store := agentregistry.NewMemoryStore()

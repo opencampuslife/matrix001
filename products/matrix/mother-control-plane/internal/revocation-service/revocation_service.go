@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/gaokao-agent/matrix-mother/internal/agentregistry"
+	"github.com/gaokao-agent/matrix-mother/internal/agent-registry"
 	"github.com/gaokao-agent/matrix-mother/internal/types"
 )
 
