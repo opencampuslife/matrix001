@@ -103,7 +103,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v5
-      - uses: astral-sh/setup-uv@v4
+      - uses: astral-sh/setup-uv@v7
       - name: Sync recommendation-service only
         run: uv sync --package metacampus-recommendation-service
       - name: Verify no heavy deps installed
@@ -123,7 +123,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v5
-      - uses: astral-sh/setup-uv@v4
+      - uses: astral-sh/setup-uv@v7
       - name: Sync llm-gateway only
         run: uv sync --package metacampus-llm-gateway
       - name: Verify no heavy deps installed
@@ -145,7 +145,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v5
-      - uses: astral-sh/setup-uv@v4
+      - uses: astral-sh/setup-uv@v7
       - name: Sync knowledge-service only
         run: uv sync --package metacampus-knowledge-service
       - name: Verify no heavy deps installed
@@ -167,7 +167,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v5
-      - uses: astral-sh/setup-uv@v4
+      - uses: astral-sh/setup-uv@v7
       - name: Sync wecom-adapter only
         run: uv sync --package metacampus-wecom-adapter
       - name: Verify no heavy deps installed
